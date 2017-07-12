@@ -2,9 +2,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="tech.bfitzsimmons.chirper.UserProfile">
+
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:id="@+id/logout"
+        android:icon="@android:drawable/presence_offline"
+        android:title="Logout"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/chirpButton"
+        android:icon="@drawable/sendchirp"
+        android:title="Chirp"
+        app:showAsAction="always" />
 </menu>

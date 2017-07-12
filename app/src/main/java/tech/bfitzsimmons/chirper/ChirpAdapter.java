@@ -13,6 +13,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -76,24 +77,29 @@ public class ChirpAdapter extends RecyclerView.Adapter<ChirpAdapter.ViewHolder> 
                     if (e == null) {
                         if (objects.size() > 0) {
                             for (ParseObject chirp : objects) {
-                                if (v.getId() == likeButton.getId()) {
-                                    //user clicked the start, so do like logic
-                                    //get the current Like count and increment it
-                                    int currentLikeCount = chirp.getInt("likeCount");
-                                    int updatedLikeCount = currentLikeCount + 1;
-                                    //update the UI first for nice UX
-                                    likeCount.setText(String.valueOf(updatedLikeCount));
+                                //can only interact with others' chirps
+                                if (!ParseUser.getCurrentUser().getUsername().equals(username.getText().toString())) {
+                                    if (v.getId() == likeButton.getId()) {
+                                        //user clicked the start, so do like logic.
+                                        //get the current Like count and increment it
+                                        int currentLikeCount = chirp.getInt("likeCount");
+                                        int updatedLikeCount = currentLikeCount + 1;
+                                        //update the UI first for nice UX
+                                        likeCount.setText(String.valueOf(updatedLikeCount));
 
-                                    //now udpate the database
-                                    chirp.put("likeCount", updatedLikeCount);
-                                    chirp.saveInBackground();
-                                } else {
-                                    //user clicked the chirp, so go to chirper's profile if we're still in HomeActvity
-                                    if (v.getContext() instanceof DashboardActivity) {
-                                        Intent intent = new Intent(v.getContext(), UserProfile.class);
-                                        intent.putExtra("chirperUsername", chirp.getString("username"));
-                                        v.getContext().startActivity(intent);
+                                        //now udpate the database
+                                        chirp.put("likeCount", updatedLikeCount);
+                                        chirp.saveInBackground();
+                                    } else {
+                                        //user clicked the chirp, so go to chirper's profile if we're still in HomeActvity
+                                        if (v.getContext() instanceof DashboardActivity) {
+                                            Intent intent = new Intent(v.getContext(), UserProfile.class);
+                                            intent.putExtra("chirperUsername", chirp.getString("username"));
+                                            v.getContext().startActivity(intent);
+                                        }
                                     }
+                                } else {
+                                    Toast.makeText(v.getContext(), "You can't interact with your own chirp", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }

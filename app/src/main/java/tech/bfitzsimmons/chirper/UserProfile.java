@@ -61,7 +61,7 @@ public class UserProfile extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.home_top_nav, menu);
+        inflater.inflate(R.menu.menu_user_profile, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -128,6 +128,9 @@ public class UserProfile extends AppCompatActivity {
             //set the view and show the dialog
             chirpDialog.setView(view);
             chirpDialog.show();
+        } else if (item.getItemId() == android.R.id.home) {
+            Intent intent = new Intent(getApplicationContext(), DashboardActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -138,6 +141,9 @@ public class UserProfile extends AppCompatActivity {
         setContentView(R.layout.activity_user_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        //set up the back button for the action bar
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //capture the username from the intent
         Intent intent = getIntent();
@@ -204,6 +210,7 @@ public class UserProfile extends AppCompatActivity {
     public void subscribeToUserChirps(final String username) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Chirp");
         query.whereEqualTo("username", username);
+        query.orderByDescending("createdAt");
 
         //first let's grab all the chirps
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -215,7 +222,7 @@ public class UserProfile extends AppCompatActivity {
                             //add all the user's chirps to the userFeed
 
                             //format the time
-                            SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
+                            SimpleDateFormat timeFormat = new SimpleDateFormat("MMM d, h:mm a");
                             String time = timeFormat.format(chirp.getCreatedAt());
 
                             //add the incoming chirp to the user feed initially
@@ -238,7 +245,7 @@ public class UserProfile extends AppCompatActivity {
             @Override
             public void onEvent(ParseQuery<ParseObject> query, ParseObject chirp) {
                 //format the time
-                SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
+                SimpleDateFormat timeFormat = new SimpleDateFormat("MMM d, h:mm a");
                 String time = timeFormat.format(chirp.getCreatedAt());
 
                 //add the incoming chirp to the user feed (realtime)

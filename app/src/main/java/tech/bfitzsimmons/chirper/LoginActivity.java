@@ -112,9 +112,6 @@ public class LoginActivity extends AppCompatActivity {
                         isLoading = false;
                         //let user know sign up was successful
                         Toast.makeText(LoginActivity.this, "Successfully registered", Toast.LENGTH_SHORT).show();
-                        //add the following field to the user with an empty array
-                        ArrayList<String> initialFollowing = new ArrayList<String>();
-                        user.add("following", initialFollowing);
                         //go to Dashboard
                         goToHome();
                     } else {

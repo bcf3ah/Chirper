@@ -25,19 +25,12 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 public class DashboardActivity extends AppCompatActivity {
-//Init HomeFeed list
-//    List<Chirp> homeFeed = new ArrayList<>();
-    //Declare HomeFeed RecyclerView
-//    RecyclerView homeFeedRecyclerView;
-
-    //Declare ChirpAdapter
-//    ChirpAdapter chirpAdapter;
-
     //Bottom navbar and fragments
     BottomNavigationView navigation;
     final FragmentManager fragmentManager = getSupportFragmentManager();
     final Fragment homeFeedFragment = new HomeFeedFragment();
-    final Fragment myProfileFragment = new MyProfileFragment();
+    final Fragment myProfileFragment = new FollowingFragment();
+    final Fragment myChirpsFragment = new MyChirpsFragment();
 
 
     //Inflate top menu
@@ -125,10 +118,11 @@ public class DashboardActivity extends AppCompatActivity {
                 case R.id.navigation_home:
                     fragmentManager.beginTransaction().replace(R.id.fragment_holder, homeFeedFragment, homeFeedFragment.getTag()).commit();
                     return true;
-                case R.id.navigation_dashboard:
+                case R.id.navigation_following:
                     fragmentManager.beginTransaction().replace(R.id.fragment_holder, myProfileFragment, myProfileFragment.getTag()).commit();
                     return true;
-                case R.id.navigation_notifications:
+                case R.id.navigation_my_chirps:
+                    fragmentManager.beginTransaction().replace(R.id.fragment_holder, myChirpsFragment, myChirpsFragment.getTag()).commit();
                     return true;
             }
             return false;
@@ -147,61 +141,5 @@ public class DashboardActivity extends AppCompatActivity {
 
         //default to HomeFeedFragment
         fragmentManager.beginTransaction().replace(R.id.fragment_holder, homeFeedFragment, homeFeedFragment.getTag()).commit();
-
-//        //fill homeFeed with 20 chirps from Parse
-//        ParseQuery<ParseObject> query = ParseQuery.getQuery("Chirp");
-//        query.whereNotEqualTo("username", ParseUser.getCurrentUser().getUsername());
-//        query.setLimit(20);
-//        query.findInBackground(new FindCallback<ParseObject>() {
-//            @Override
-//            public void done(List<ParseObject> objects, ParseException e) {
-//                if(e == null){
-//                    if(objects.size() > 0){
-//                        for(ParseObject chirp: objects){
-//                            //format the time
-//                            SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
-//                            String time = timeFormat.format(chirp.getCreatedAt());
-//                            homeFeed.add(new Chirp(chirp.getString("username"),
-//                                    chirp.getString("chirp"),
-//                                    time,
-//                                    chirp.getInt("likeCount")));
-//                        }
-//                    }
-//                }
-//
-//                //notify the recyclerView adapter that we just populated the homefeed list
-//                chirpAdapter.notifyDataSetChanged();
-//            }
-//        });
-//
-//        // Subscribe to new chirps
-//        SubscriptionHandling<ParseObject> subscriptionHandling = ParseApp.parseLiveQueryClient.subscribe(query);
-//
-//        //change homeFeed when new chirp is made
-//        subscriptionHandling.handleEvent(SubscriptionHandling.Event.CREATE, new SubscriptionHandling.HandleEventCallback<ParseObject>() {
-//            @Override
-//            public void onEvent(ParseQuery<ParseObject> query, ParseObject chirp) {
-//                //format the time
-//                SimpleDateFormat timeFormat = new SimpleDateFormat("h:mm a");
-//                String time = timeFormat.format(chirp.getCreatedAt());
-//
-//                //add the incoming chirp to the homefeed (realtime)
-//                homeFeed.add(new Chirp(chirp.getString("username"),
-//                        chirp.getString("chirp"),
-//                        time,
-//                        chirp.getInt("likeCount")));
-//
-//                //notify the adapter
-//                chirpAdapter.notifyDataSetChanged();
-//            }
-//        });
-
-//        //init HomeFeedRecyclerView and its adapter
-//        homeFeedRecyclerView = (RecyclerView) findViewById(R.id.homeFeedRecyclerView);
-//        chirpAdapter = new ChirpAdapter(homeFeed);
-//        RecyclerView.LayoutManager manager = new LinearLayoutManager(getApplicationContext());
-//        homeFeedRecyclerView.setLayoutManager(manager);
-//        homeFeedRecyclerView.setAdapter(chirpAdapter);
-
     }
 }
