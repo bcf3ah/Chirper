@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/chirp_dialog_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp"
+        android:text="Compose a new chirp"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/chirp_dialog_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chirp_dialog_title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="27dp"
+        android:ems="10"
+        android:maxLength="140"
+        android:inputType="textMultiLine" />
+
+    <ImageButton
+        android:id="@+id/chirp_dialog_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/chirp_dialog_input"
+        android:layout_below="@+id/chirp_dialog_input"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="18dp"
+        android:backgroundTint="@android:color/holo_blue_bright"
+        android:elevation="4dp"
+        app:srcCompat="@android:drawable/ic_menu_send" />
+
+    <TextView
+        android:id="@+id/chirp_dialog_char_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/chirp_dialog_input"
+        android:layout_alignTop="@+id/chirp_dialog_submit"
+        android:text="0"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/chirp_dialog_char_limit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/chirp_dialog_char_count"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/chirp_dialog_char_count"
+        android:text="/ 140"
+        android:textSize="18sp" />
+
+</RelativeLayout>
